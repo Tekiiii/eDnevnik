@@ -157,8 +157,8 @@ public class OcenaController {
 	
 	
 	@Secured({ "admin", "predmetni_nastavnik" })
-	@RequestMapping(method = RequestMethod.GET, value = "/izracunajzakljucnu/{pIds}/predmet/{sIds}")
-	private ResponseEntity<?> izracunajZakljucnu(@PathVariable String ucenikIds, @PathVariable String predmetIds) {
+	@RequestMapping(method = RequestMethod.GET, value = "/izracunajzakljucnu/{ucenikId}/predmet/{predmetId}")
+	private ResponseEntity<?> izracunajZakljucnu(@PathVariable String ucenikId, @PathVariable String predmetId) {
 
 		try {
 
@@ -187,7 +187,7 @@ public class OcenaController {
 	
 	
 	@Secured({ "admin", "predmetni_nastavnik" })
-	@RequestMapping(method = RequestMethod.POST, value = "zakljuciocenu/{pIds}/subj/{sIds}")
+	@RequestMapping(method = RequestMethod.POST, value = "zakljuciocenu/{ucenikId}/predmet/{predmetId}")
 	private ResponseEntity<?> zakljuciOcenu(@PathVariable String ucenikIds, @PathVariable String predmetIds,
 			@RequestParam String sugg) {
 
