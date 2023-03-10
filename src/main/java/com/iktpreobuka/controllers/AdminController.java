@@ -174,9 +174,9 @@ public class AdminController {
 
         logger.info("Pozvana je metoda download.");
         HttpHeaders header = new HttpHeaders();
-        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=springboot-logging.log");
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=spring-boot-logging.log");
 
-        Path path1 = Paths.get("log/springboot-logging.log");
+        Path path1 = Paths.get("logs/spring-boot-logging.log");
 
         ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path1));
 
