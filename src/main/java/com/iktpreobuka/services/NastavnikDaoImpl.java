@@ -28,6 +28,7 @@ import com.iktpreobuka.repositories.OcenaRepository;
 import com.iktpreobuka.repositories.OdeljenjeNastavnikRazredPredmetRepository;
 import com.iktpreobuka.repositories.PredmetRepository;
 import com.iktpreobuka.repositories.RazredPredmetRepository;
+import com.iktpreobuka.util.Encryption;
 
 
 
@@ -138,6 +139,7 @@ public class NastavnikDaoImpl implements NastavnikDao {
 		nastavnik.setEmail(newNastavnik.getEmail());
 		nastavnik.setPozicijaNastavnika(newNastavnik.getPozicijaNastavnika());
 		nastavnik.setNoOfLicence(newNastavnik.getTeacherNoOfLicence());
+		nastavnik.setPassword(Encryption.getPassEncoded(nastavnik.getPassword()));
 		nastavnikRepo.save(nastavnik);
 		logger.error("Greska prilikom kreiranja veze tgs");
 		logger.info("Admin (email: " + AuthController.getEmail() + ")  dodat novi nastavnik " + nastavnik);

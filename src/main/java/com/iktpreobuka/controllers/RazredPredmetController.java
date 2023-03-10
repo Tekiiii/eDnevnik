@@ -83,7 +83,7 @@ public class RazredPredmetController {
 				return new ResponseEntity<Razred_Predmet>(rp, HttpStatus.OK);
 
 			} else
-				return new ResponseEntity<RestError>(new RestError(10, "There is no grade_subject with such ID"),
+				return new ResponseEntity<RestError>(new RestError(10, "Ne postoji veza razredPredmet sa zadatim ID"),
 						HttpStatus.NOT_FOUND);
 
 		} catch (Exception e) {

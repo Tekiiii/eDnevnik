@@ -32,7 +32,7 @@ import com.iktpreobuka.repositories.UcenikRepository;
 
 
 @RestController
-@RequestMapping(path = "sr/zakljucivanje")
+@RequestMapping(path = "ednevnik/zakljucivanje")
 public class ZakljucnaOcenaController {
 
 	@Autowired
@@ -159,7 +159,7 @@ public class ZakljucnaOcenaController {
 	}
 
 	@Secured({ "admin", "predmetni_nastavnik" })
-	@RequestMapping(method = RequestMethod.GET, value = "/izracunaj_zakljucnu/{ucenikIds}/predmet/{predmetIds}")
+	@RequestMapping(method = RequestMethod.GET, value = "/izracunajzakljucnu/{ucenikIds}/predmet/{predmetIds}")
 	private ResponseEntity<?> izracunajZakljucnuOcenu(@PathVariable String ucenikIds, @PathVariable String predmetIds) {
 
 		try {
@@ -175,7 +175,7 @@ public class ZakljucnaOcenaController {
 	}
 
 	@Secured({ "admin", "predmetni_nastavnik" })
-	@RequestMapping(method = RequestMethod.POST, value = "zakljuciOcenu/{ucenikIds}/predmet/{predmetIds}")
+	@RequestMapping(method = RequestMethod.POST, value = "zakljuciocenu/{ucenikIds}/{predmetIds}")
 	private ResponseEntity<?> zakljuciOcenu(@PathVariable String ucenikIds, @PathVariable String predmetIds,
 			@RequestParam String sugg) {
 
