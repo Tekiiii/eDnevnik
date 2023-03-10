@@ -175,7 +175,7 @@ public class ZakljucnaOcenaController {
 	}
 
 	@Secured({ "admin", "predmetni_nastavnik" })
-	@RequestMapping(method = RequestMethod.POST, value = "zakljuciocenu/{ucenikIds}/{predmetIds}")
+	@RequestMapping(method = RequestMethod.POST, value = "zakljuciocenu/{ucenikIds}/{predmetIds}/sugg")
 	private ResponseEntity<?> zakljuciOcenu(@PathVariable String ucenikIds, @PathVariable String predmetIds,
 			@RequestParam String sugg) {
 

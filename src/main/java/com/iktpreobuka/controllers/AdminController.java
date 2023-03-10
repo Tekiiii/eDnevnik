@@ -1,10 +1,17 @@
 package com.iktpreobuka.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -24,7 +31,7 @@ import com.iktpreobuka.entites.dto.UserDTO;
 import com.iktpreobuka.repositories.AdminRepository;
 import com.iktpreobuka.services.UserDao;
 
-
+import ch.qos.logback.classic.Logger;
 
 @RestController
 @RequestMapping(path = "ednevnik/admins")
@@ -36,7 +43,9 @@ public class AdminController {
 	@Autowired
 	UserDao userDao;
 
-
+	private final Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
+	
+	
 	@Secured("admin")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> getAll() {
@@ -158,5 +167,22 @@ public class AdminController {
 	private String createErrorMessage(BindingResult result) {
 		return result.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining(" "));
 	}
+	
+	@Secured("admin")
+    @RequestMapping(method = RequestMethod.GET, value = "/download")
+    public ResponseEntity<ByteArrayResource> downloadFile() throws IOException {
+
+        logger.info("Pozvana je metoda download.");
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=springboot-logging.log");
+
+        Path path1 = Paths.get("log/springboot-logging.log");
+
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path1));
+
+        return ResponseEntity.ok().headers(header)
+                .contentType(org.springframework.http.MediaType.APPLICATION_OCTET_STREAM).body(resource);
+
+    }
 
 }
