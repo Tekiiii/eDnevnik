@@ -26,7 +26,7 @@ import com.iktpreobuka.repositories.PredmetRepository;
 import com.iktpreobuka.services.PredmetDao;
 
 @RestController
-@RequestMapping(path = "sr/predmet")
+@RequestMapping(path = "ednevnik/predmet")
 public class PredmetController {
 
 	@Autowired
@@ -84,7 +84,7 @@ public class PredmetController {
 		try {
 			predmet.setName(newPredmet.getNaziv());
 			predmetRepo.save(predmet);
-			logger.error("Error occurred while adding new subject");
+			logger.error("Greska prilikom brisanja predmeta ");
 			logger.info("Admin (email: " + AuthController.getEmail() + ")  added new predmet " + predmet);
 			return new ResponseEntity<Predmet>(predmet, HttpStatus.OK);
 

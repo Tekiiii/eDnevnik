@@ -177,7 +177,7 @@ public class UcenikController {
 	}
 
 	@Secured("admin")
-	@RequestMapping(method = RequestMethod.PUT, value = "/addOdeljenje/{ids}/{scIds}")
+	@RequestMapping(method = RequestMethod.PUT, value = "/addOdeljenje/{ids}/{odeljenjeIds}")
 	public ResponseEntity<?> addOdeljenje(@PathVariable String ids, @PathVariable String odeljenjeIds) {
 		try {
 			Integer id = Integer.valueOf(ids);
@@ -216,7 +216,7 @@ public class UcenikController {
 	}
 
 	@Secured({ "admin", "UCENIK", "RODITELJ" })
-	@RequestMapping(method = RequestMethod.GET, value = "/getOcenaPredmet/{pIds}")
+	@RequestMapping(method = RequestMethod.GET, value = "/getOcenaPredmet/{ucenikIds}")
 	public ResponseEntity<?> getOcenaPredmet(@PathVariable Integer ucenikId) {
 		try {
 			Integer id = Integer.valueOf(ucenikId);
