@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +32,7 @@ import io.jsonwebtoken.Jwts;
 
 @RestController
 @RequestMapping(path = "ednevnik")
+@CrossOrigin(origins="http://localhost:3000")
 public class AuthController {
 
 	@Autowired
@@ -51,7 +53,7 @@ public class AuthController {
 		.setIssuedAt(new Date(System.currentTimeMillis()))
 		.setExpiration(new Date(System.currentTimeMillis() + this.tokenDuration))
 		.signWith(this.secretKey).compact();
-		return"Bearer "+ token;
+		return "Bearer "+ token;
 	}
 	
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
@@ -62,6 +64,7 @@ public class AuthController {
 	UserDTO user= new UserDTO();
 	user.setUser(email);
 	user.setToken(token);
+	user.setRole(userEntity.getRole());
 	return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	return new ResponseEntity<>("Wrong credentials", HttpStatus.UNAUTHORIZED);

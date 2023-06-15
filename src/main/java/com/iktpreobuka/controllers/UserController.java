@@ -52,7 +52,7 @@ public class UserController {
 		return"Bearer "+ token;
 	}
 	
-	@RequestMapping(path = "/ednevnik/llogin", method = RequestMethod.POST)
+	@RequestMapping(path = "/ednevnik/login", method = RequestMethod.POST)
 	public ResponseEntity<?> login(@RequestParam("user") String email, @RequestParam("password") String pwd) {
 	UserEntity userEntity= userRepository.findByEmail(email);
 	if(userEntity!= null&& Encryption.checkPassword(pwd, userEntity.getPassword())) {

@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.iktpreobuka.controllers.AuthController;
+//import com.iktpreobuka.controllers.AuthController;
 import com.iktpreobuka.controllers.util.RestError;
 import com.iktpreobuka.entites.Nastavnik_Razred_Predmet;
 import com.iktpreobuka.entites.Odeljenje;
@@ -47,11 +47,11 @@ public class OdeljenjeNastavnikRazredPredmetDaoImpl implements OdeljenjeNastavni
 						onrp2b.setNrp(nrp);
 						onrpRepo.save(onrp2b);
 						logger.error("Greska prilikom update onrp");
-						logger.info("Admin (email:" + AuthController.getEmail() + ") updated  onrp from:{ id:"
-								+ exonrp.getId() + ", odeljenje_id: " + exonrp.getOdeljenje().getId()
-								+ ", nrp_id:	 " + exonrp.getNrp().getId() + " } to:{ id:" + onrp2b.getId()
-								+ ", odeljenje_id: " + onrp2b.getOdeljenje().getId() + ", nrp_id:	 "
-								+ onrp2b.getNrp().getId() + " }");
+						//logger.info("Admin (email:" + AuthController.getEmail() + ") updated  onrp from:{ id:"
+								//+ exonrp.getId() + ", odeljenje_id: " + exonrp.getOdeljenje().getId()
+								//+ ", nrp_id:	 " + exonrp.getNrp().getId() + " } to:{ id:" + onrp2b.getId()
+								//+ ", odeljenje_id: " + onrp2b.getOdeljenje().getId() + ", nrp_id:	 "
+								//+ onrp2b.getNrp().getId() + " }");
 						return new ResponseEntity<Odeljenje_Nastavnik_Razred_Predmet>(onrp2b, HttpStatus.OK);
 					} else {
 						return new ResponseEntity<RestError>(new RestError(5,
@@ -80,15 +80,15 @@ public class OdeljenjeNastavnikRazredPredmetDaoImpl implements OdeljenjeNastavni
 			if (onrp.getOcena().isEmpty()) {
 				onrpRepo.deleteById(id);
 				logger.error("Error occurred");
-				logger.info("Admin (email:" + AuthController.getEmail() + ") deleted  onrp:{ id:" + onrp.getId()
-						+ ", odeljenje_id: " + onrp.getOdeljenje().getId() + ", nrp_id:	 " + onrp.getNrp().getId()
-						+ " }");
+				//logger.info("Admin (email:" + AuthController.getEmail() + ") deleted  onrp:{ id:" + onrp.getId()
+						//+ ", odeljenje_id: " + onrp.getOdeljenje().getId() + ", nrp_id:	 " + onrp.getNrp().getId()
+						//+ " }");
 				return new ResponseEntity<Odeljenje_Nastavnik_Razred_Predmet>(onrp, HttpStatus.OK);
 			} else {
 				onrp.setActive(false);
 				logger.error("Greska prilikom brisanja veze onrp");
-				logger.info("Admin (email:" + AuthController.getEmail() + ") updated onrp with id:" + onrp.getId()
-						+ " active = false ");
+				//logger.info("Admin (email:" + AuthController.getEmail() + ") updated onrp with id:" + onrp.getId()
+						//+ " active = false ");
 				return new ResponseEntity<RestError>(
 						new RestError(10, "Nemoguce obrisati, postoji veza sa ocenom."),
 						HttpStatus.OK);

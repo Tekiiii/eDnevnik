@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.iktpreobuka.controllers.AuthController;
+//import com.iktpreobuka.controllers.AuthController;
 import com.iktpreobuka.controllers.util.RestError;
 import com.iktpreobuka.entites.Nastavnik;
 import com.iktpreobuka.entites.Nastavnik_Razred_Predmet;
@@ -74,7 +74,7 @@ public class NastavnikDaoImpl implements NastavnikDao {
 						nrp.setRazredPredmet(razredPredmet);;
 						nastavnikRazredPredmetRepo.save(nrp);
 						logger.error("Greska prilikom stvaranja veze nrp");
-						logger.info("Admin (email: " + AuthController.getEmail() + ")  dodata nova veza nrp " + nrp);
+						//logger.info("Admin (email: " + AuthController.getEmail() + ")  dodata nova veza nrp " + nrp);
 						return new ResponseEntity<Nastavnik_Razred_Predmet>(nrp, HttpStatus.OK);
 					} else {
 						return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
@@ -97,8 +97,8 @@ public class NastavnikDaoImpl implements NastavnikDao {
 			for (Razred_Predmet rp : razredPredmetRepo.findByRazred_LabelIsLessThan(5)) {
 				addRazredPredmet(nastavnikId, rp.getId());
 				logger.error("Greska prilikom kreiranja veze nrp");
-				logger.info("Admin (email: " + AuthController.getEmail()
-						+ ") dodata nova veza razred predmet ucitelju #id " + nastavnikId);
+				//logger.info("Admin (email: " + AuthController.getEmail()
+						//+ ") dodata nova veza razred predmet ucitelju #id " + nastavnikId);
 			}
 			return new ResponseEntity<List<Nastavnik_Razred_Predmet>>(nastavnikRazredPredmetRepo.findByNastavnik_id(nastavnikId),
 					HttpStatus.OK);
@@ -114,8 +114,8 @@ public class NastavnikDaoImpl implements NastavnikDao {
 			for (Razred_Predmet rp : razredPredmetRepo.findByPredmet_idAndRazred_LabelIsGreaterThan(predmetId, 4)){
 				addRazredPredmet(nastavnikId, rp.getId());
 				logger.error("Greska prilikom kreiranja veze nrp");
-				logger.info("Admin (email: " + AuthController.getEmail()
-						+ ")  dodata nova veza razred predmet nastavniku #id " + nastavnikId);
+				//logger.info("Admin (email: " + AuthController.getEmail()
+					//	+ ")  dodata nova veza razred predmet nastavniku #id " + nastavnikId);
 			}
 			return new ResponseEntity<List<Nastavnik_Razred_Predmet>>(nastavnikRazredPredmetRepo.findByNastavnik_id(nastavnikId),
 					HttpStatus.OK);
@@ -142,7 +142,7 @@ public class NastavnikDaoImpl implements NastavnikDao {
 		nastavnik.setPassword(Encryption.getPassEncoded(nastavnik.getPassword()));
 		nastavnikRepo.save(nastavnik);
 		logger.error("Greska prilikom kreiranja veze tgs");
-		logger.info("Admin (email: " + AuthController.getEmail() + ")  dodat novi nastavnik " + nastavnik);
+		//logger.info("Admin (email: " + AuthController.getEmail() + ")  dodat novi nastavnik " + nastavnik);
 
 		return new ResponseEntity<Nastavnik>(nastavnik, HttpStatus.OK);
 	}

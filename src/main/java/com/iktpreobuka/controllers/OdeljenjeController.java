@@ -74,7 +74,7 @@ public class OdeljenjeController {
 			odeljenje.setLabel(label);;
 			odeljenjeRepo.save(odeljenje);
 			logger.error("Greska prilikom kreiranja novog odeljenja.");
-			logger.info("Admin (email:" + AuthController.getEmail() + ") added new  odeljenje " + odeljenje);
+		//	logger.info("Admin (email:" + AuthController.getEmail() + ") added new  odeljenje " + odeljenje);
 			return new ResponseEntity<Odeljenje>(odeljenje, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -96,8 +96,8 @@ public class OdeljenjeController {
 				odeljenje.setLabel(oznaka);
 				odeljenjeRepo.save(odeljenje);
 				logger.error("Greska prilikom izmene odeljenja sa #id:" + odeljenje.getId());
-				logger.info("Admin (email:" + AuthController.getEmail() + ") updated  odeljenje from" + odeljenje
-						+ " to: " + staroOdeljenje);
+			//	logger.info("Admin (email:" + AuthController.getEmail() + ") updated  odeljenje from" + odeljenje
+					//	+ " to: " + staroOdeljenje);
 				return new ResponseEntity<Odeljenje>(odeljenje, HttpStatus.OK);
 
 			} else
@@ -122,8 +122,8 @@ public class OdeljenjeController {
 					if (odeljenje.getUcenik().isEmpty()) {
 						odeljenjeRepo.deleteById(id);
 						logger.error("Greska prilikom brisanja odeljenja sa #id:" + odeljenje.getId());
-						logger.info(
-								"Admin (email:" + AuthController.getEmail() + ") deleted  odeljenje " + odeljenje);
+				//	logger.info(
+								//"Admin (email:" + AuthController.getEmail() + ") deleted  odeljenje " + odeljenje);
 						return new ResponseEntity<Odeljenje>(odeljenje, HttpStatus.OK);
 					} else
 						return new ResponseEntity<RestError>(

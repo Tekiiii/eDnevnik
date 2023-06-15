@@ -79,7 +79,7 @@ public class OznakaOceneController {
 			oznakaOcene.setDescription(newOznakaOcene.getOpis());
 			oznakaOceneRepo.save(oznakaOcene);
 			logger.error("Greska prilikom kreiranja oznake ocene.");
-			logger.info("Admin (email: " + AuthController.getEmail() + ") created new oznaka ocene " + oznakaOcene);
+		//	logger.info("Admin (email: " + AuthController.getEmail() + ") created new oznaka ocene " + oznakaOcene);
 			return new ResponseEntity<OznakaOcene>(oznakaOcene, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<RestError>(new RestError(1, "Error ocured: " + e.getMessage()),
@@ -106,8 +106,8 @@ public class OznakaOceneController {
 				oznakaOcene.setDescription(oznakaOcene.getDescription());
 				oznakaOceneRepo.save(oznakaOcene);
 				logger.error("Greska prilikom izmene oznake ocene");
-				logger.info("Admin (email: " + AuthController.getEmail() + ") updated oznaka ocene from:" + oldmarkType
-						+ " to: " + oznakaOcene);
+				//logger.info("Admin (email: " + AuthController.getEmail() + ") updated oznaka ocene from:" + oldmarkType
+					//	+ " to: " + oznakaOcene);
 				return new ResponseEntity<OznakaOcene>(oznakaOcene, HttpStatus.OK);
 
 			} else
@@ -132,7 +132,7 @@ public class OznakaOceneController {
 				if (oznakaOcene.getOcena().isEmpty()) {
 					oznakaOceneRepo.deleteById(id);
 					logger.error("Greska prilikom brisanja oznake ocene.");
-					logger.info("Admin (email: " + AuthController.getEmail() + ") deleted oznaka ocene " + oznakaOcene);
+				//	logger.info("Admin (email: " + AuthController.getEmail() + ") deleted oznaka ocene " + oznakaOcene);
 					return new ResponseEntity<OznakaOcene>(oznakaOcene, HttpStatus.OK);
 				} else {
 					return new ResponseEntity<RestError>(new RestError(10, "Nemoguce obrisati oznaku ocene. "),

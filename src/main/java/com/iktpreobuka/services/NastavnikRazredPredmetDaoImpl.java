@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.iktpreobuka.controllers.AuthController;
+//import com.iktpreobuka.controllers.AuthController;
 import com.iktpreobuka.controllers.util.RestError;
 import com.iktpreobuka.entites.Nastavnik;
 import com.iktpreobuka.entites.Nastavnik_Razred_Predmet;
@@ -51,8 +51,8 @@ public class NastavnikRazredPredmetDaoImpl implements NastavnikRazredPredmetDao 
 							nrp.setRazredPredmet(razredPredmet);
 							nrpRepo.save(nrp);
 							logger.error("Greska prilikom izmene nrp " + nrp);
-							logger.info("Admin (email: " + AuthController.getEmail() + ") updated nrp from:" + starijinrp
-									+ " to: " + nrp);
+							//logger.info("Admin (email: " + AuthController.getEmail() + ") updated nrp from:" + starijinrp
+									//+ " to: " + nrp);
 							return new ResponseEntity<Nastavnik_Razred_Predmet>(nrp, HttpStatus.OK);
 						} else {
 							return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);

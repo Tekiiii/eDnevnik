@@ -130,11 +130,11 @@ public class UcenikController {
 				if (ucenik.getOcena().isEmpty()) {
 					ucenikRepo.deleteById(id);
 					logger.error("Error occurred while deleting ucenika: " + ucenik);
-					logger.info("Admin (email: " + AuthController.getEmail() + ")  deleted ucenik " + ucenik);
+					//logger.info("Admin (email: " + AuthController.getEmail() + ")  deleted ucenik " + ucenik);
 					return new ResponseEntity<Ucenik>(ucenik, HttpStatus.OK);
 				} else {
 					logger.error("Error occurred while deleting pupil: " + ucenik);
-					logger.info("Admin (email: " + AuthController.getEmail() + ")  set NOT_ACTIVE to: " + ucenik);
+					//logger.info("Admin (email: " + AuthController.getEmail() + ")  set NOT_ACTIVE to: " + ucenik);
 					ucenik.setRole(UserRole.NOT_ACTIVE);
 					return new ResponseEntity<RestError>(
 							new RestError(10, "Nije moguce obrisati ucenika koji ima ocene."),

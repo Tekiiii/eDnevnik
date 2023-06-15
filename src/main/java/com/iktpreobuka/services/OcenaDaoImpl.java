@@ -14,7 +14,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.iktpreobuka.controllers.AuthController;
+//import com.iktpreobuka.controllers.AuthController;
 import com.iktpreobuka.controllers.util.RestError;
 import com.iktpreobuka.entites.Ocena;
 import com.iktpreobuka.entites.Odeljenje_Nastavnik_Razred_Predmet;
@@ -79,7 +79,7 @@ public class OcenaDaoImpl implements OcenaDao {
 										HttpStatus.INTERNAL_SERVER_ERROR);
 							}
 							logger.error("Greska prilikom kreiranja nove ocene");
-							logger.info("User (email: " + AuthController.getEmail() + ") added new ocena " + ocena);
+							//logger.info("User (email: " + AuthController.getEmail() + ") added new ocena " + ocena);
 							return new ResponseEntity<Ocena>(ocena, HttpStatus.OK);
 						} else {
 							return new ResponseEntity<RestError>(
@@ -137,8 +137,8 @@ public class OcenaDaoImpl implements OcenaDao {
 									HttpStatus.INTERNAL_SERVER_ERROR);
 						}
 						logger.error("Greska.");
-						logger.info("User (email: " + AuthController.getEmail() + ") updated ocena from " + staraOcena
-								+ " to: " + ocena);
+						//logger.info("User (email: " + AuthController.getEmail() + ") updated ocena from " + staraOcena
+							//	+ " to: " + ocena);
 						return new ResponseEntity<Ocena>(ocena, HttpStatus.OK);
 
 					} else {
@@ -237,8 +237,8 @@ public class OcenaDaoImpl implements OcenaDao {
 									HttpStatus.INTERNAL_SERVER_ERROR);
 						}
 						logger.error("Greska prilikom zakljucivanja ocene.");
-						logger.info(
-								"User (email: " + AuthController.getEmail() + ") added new zakljucena ocena " + zakljucena);
+						//logger.info(
+							//	"User (email: " + AuthController.getEmail() + ") added new zakljucena ocena " + zakljucena);
 						return new ResponseEntity<Ocena>(zakljucena, HttpStatus.OK);
 					} else {
 						return new ResponseEntity<RestError>(

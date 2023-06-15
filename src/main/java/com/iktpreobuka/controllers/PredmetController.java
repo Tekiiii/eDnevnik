@@ -1,5 +1,6 @@
 package com.iktpreobuka.controllers;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iktpreobuka.controllers.util.RestError;
 import com.iktpreobuka.entites.Predmet;
 import com.iktpreobuka.entites.dto.NazivPredmetaDTO;
+import com.iktpreobuka.entites.dto.PredmetDTO;
 import com.iktpreobuka.entites.dto.PripadaRazredPredmetDTO;
 import com.iktpreobuka.repositories.PredmetRepository;
 import com.iktpreobuka.services.PredmetDao;
 
 @RestController
 @RequestMapping(path = "ednevnik/predmet")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PredmetController {
 
 	@Autowired
@@ -38,7 +42,7 @@ public class PredmetController {
 	private final Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
 
 	
-	@Secured("admin")
+	@Secured({"admin", "NASTAVNIK"})
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> getAll() {
 		try {
@@ -50,7 +54,6 @@ public class PredmetController {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 	@Secured("admin")
 	@RequestMapping(method = RequestMethod.GET, value = "/by_id/{ids}")
 	public ResponseEntity<?> getById(@PathVariable String ids) {
@@ -67,67 +70,67 @@ public class PredmetController {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
+	
 	@Secured("admin")
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> addPredmet(@Valid @RequestBody NazivPredmetaDTO newPredmet, BindingResult result) {
+	public PredmetDTO addPredmet(@Valid @RequestBody PredmetDTO dto) {
+		
 		Predmet predmet = new Predmet();
-
-		if (result.hasErrors()) {
-			return new ResponseEntity<>(createErrorMessage(result), HttpStatus.BAD_REQUEST);
-		}
-
-		if (predmetRepo.findByNameIgnoreCase(newPredmet.getNaziv()).isPresent()) {
-			return new ResponseEntity<String>("Predmet postoji u bazi podataka.", HttpStatus.NOT_ACCEPTABLE);
-		}
-
-		try {
-			predmet.setName(newPredmet.getNaziv());
-			predmetRepo.save(predmet);
-			logger.error("Greska prilikom brisanja predmeta ");
-			logger.info("Admin (email: " + AuthController.getEmail() + ")  added new predmet " + predmet);
-			return new ResponseEntity<Predmet>(predmet, HttpStatus.OK);
-
-		} catch (Exception e) {
-			return new ResponseEntity<RestError>(new RestError(1, "Error ocured: " + e.getMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		predmet.setName(dto.getName());
+		predmet.setFond(dto.getFond());
+		predmet.setRazred(dto.getRazred());
+	
+	predmetRepo.save(predmet);
+	return new PredmetDTO(predmet);
 
 	}
 
 	@Secured("admin")
-	@RequestMapping(method = RequestMethod.PUT, value = "update/{ids}")
-	public ResponseEntity<?> updatePredmet(@PathVariable String ids, @Valid @RequestBody NazivPredmetaDTO newPredmet,
-			BindingResult result) {
-		if (result.hasErrors()) {
-			return new ResponseEntity<>(createErrorMessage(result), HttpStatus.BAD_REQUEST);
+	@RequestMapping(method = RequestMethod.PUT, value = "/{ids}")
+	public ResponseEntity<?> updatePredmet(@PathVariable Integer id, @Valid @RequestBody PredmetDTO dto) {
+		Optional<Predmet> p = predmetRepo.findById(id);
+		if(p.isPresent()) {
+			Predmet p1 = p.get();
+			p1.setName(dto.getName());
+			p1.setFond(dto.getFond());
+			p1.setRazred(dto.getRazred());
+			predmetRepo.save(p1);
+			return new ResponseEntity<PredmetDTO>(new PredmetDTO(p1), HttpStatus.OK);
+		}else{
+			return new ResponseEntity<PredmetDTO>(HttpStatus.NOT_FOUND);
 		}
-
-		try {
-			Integer id = Integer.valueOf(ids);
-			if (predmetRepo.existsById(id)) {
-				Predmet predmet = predmetRepo.findById(id).get();
-				Predmet oldPredmet = predmetRepo.findById(id).get();
-				predmet.setName(newPredmet.getNaziv());
-				predmetRepo.save(predmet);
-				logger.error("Greska prilikom update predmeta " + predmet);
-				logger.info("Admin (email: " + AuthController.getEmail() + ") updated predmet from:" + oldPredmet
-						+ " to: " + predmet);
-				return new ResponseEntity<Predmet>(predmet, HttpStatus.OK);
-
-			} else
-				return new ResponseEntity<RestError>(new RestError(10, "Ne postoji predmet sa zadatim ID"),
-						HttpStatus.NOT_FOUND);
-
-		} catch (Exception e) {
-			return new ResponseEntity<RestError>(new RestError(1, "Error ocured: " + e.getMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
 	}
+	//	}
+		
+	//	if (result.hasErrors()) {
+	//		return new ResponseEntity<>(createErrorMessage(result), HttpStatus.BAD_REQUEST);
+	//	}
+
+	//	try {
+	//		Integer id = Integer.valueOf(ids);
+	//		if (predmetRepo.existsById(id)) {
+	//			Predmet predmet = predmetRepo.findById(id).get();
+	//			Predmet oldPredmet = predmetRepo.findById(id).get();
+	//			predmet.setName(newPredmet.getNaziv());
+	//			predmetRepo.save(predmet);
+	//			logger.error("Greska prilikom update predmeta " + predmet);
+	//			logger.info("Admin (email: " + AuthController.getEmail() + ") updated predmet from:" + oldPredmet
+	//					+ " to: " + predmet);
+	//			return new ResponseEntity<Predmet>(predmet, HttpStatus.OK);
+
+		//	} else
+	//			return new ResponseEntity<RestError>(new RestError(10, "Ne postoji predmet sa zadatim ID"),
+	//					HttpStatus.NOT_FOUND);
+
+	//	} catch (Exception e) {
+	//		return new ResponseEntity<RestError>(new RestError(1, "Error ocured: " + e.getMessage()),
+	//				HttpStatus.INTERNAL_SERVER_ERROR);
+	//	}
+
+	//}
 
 	@Secured("admin")
-	@RequestMapping(method = RequestMethod.DELETE, value = "/delete/{ids}")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{ids}")
 	public ResponseEntity<?> removePredmet(@PathVariable String ids) {
 		try {
 			Integer id = Integer.valueOf(ids);

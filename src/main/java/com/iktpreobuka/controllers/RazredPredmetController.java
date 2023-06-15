@@ -79,7 +79,7 @@ public class RazredPredmetController {
 				rp.setKnjiga(updateRazredPredmet.getKnjiga());
 				razredPredmetRepo.save(rp);
 				logger.error("Error occurred");
-				logger.info("Admin (email: " + AuthController.getEmail() + ") updated rp from " + oldrp + " to " + rp);
+			//	logger.info("Admin (email: " + AuthController.getEmail() + ") updated rp from " + oldrp + " to " + rp);
 				return new ResponseEntity<Razred_Predmet>(rp, HttpStatus.OK);
 
 			} else
@@ -103,14 +103,14 @@ public class RazredPredmetController {
 				if (rp.getNrp().isEmpty()) {
 					razredPredmetRepo.deleteById(id);
 					logger.error("Error occurred");
-					logger.info("Admin (email: " + AuthController.getEmail() + ") deleted rp: " + rp);
+				//	logger.info("Admin (email: " + AuthController.getEmail() + ") deleted rp: " + rp);
 					return new ResponseEntity<Razred_Predmet>(rp, HttpStatus.OK);
 				} else {
 					rp.setActive(false);
 					razredPredmetRepo.save(rp);
 					logger.error("Error occurred");
-					logger.info(
-							"Admin (email: " + AuthController.getEmail() + ") rp, id " + rp.getId() + "to not activeF");
+				//	logger.info(
+				//			"Admin (email: " + AuthController.getEmail() + ") rp, id " + rp.getId() + "to not activeF");
 					return new ResponseEntity<RestError>(
 							new RestError(10, "Nije moguce obrisati."),	HttpStatus.OK);
 				}

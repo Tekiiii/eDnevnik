@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.iktpreobuka.controllers.AuthController;
+//import com.iktpreobuka.controllers.AuthController;
 import com.iktpreobuka.controllers.util.RestError;
 import com.iktpreobuka.entites.Predmet;
 import com.iktpreobuka.entites.Razred_Predmet;
@@ -48,7 +48,7 @@ public class PredmetDaoImpl implements PredmetDao {
 						rp.setKnjiga(razPred.getKnjiga());
 						razredPredmetRepo.save(rp);
 						logger.error("Greska prilikom dodavanja novog predmeta u razred");
-						logger.info("Admin (email: " + AuthController.getEmail() + ") dodat novi razred predmet " + rp);
+					//	logger.info("Admin (email: " + AuthController.getEmail() + ") dodat novi razred predmet " + rp);
 						return new ResponseEntity<Razred_Predmet>(rp, HttpStatus.OK);
 					}
 				} else

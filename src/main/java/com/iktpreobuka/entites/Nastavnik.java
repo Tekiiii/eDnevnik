@@ -31,7 +31,7 @@ public class Nastavnik extends UserEntity {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "nastavnik", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	protected List<Nastavnik_Razred_Predmet> nrp = new ArrayList<>();
+	private List<Nastavnik_Razred_Predmet> nrp = new ArrayList<>();
 
 	public Nastavnik() {
 		super();

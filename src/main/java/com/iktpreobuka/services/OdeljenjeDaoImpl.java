@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.iktpreobuka.controllers.AuthController;
+//import com.iktpreobuka.controllers.AuthController;
 import com.iktpreobuka.controllers.util.RestError;
 import com.iktpreobuka.entites.Nastavnik_Razred_Predmet;
 import com.iktpreobuka.entites.Odeljenje;
@@ -85,8 +85,8 @@ public class OdeljenjeDaoImpl implements OdeljenjeDao {
 				ucenik.setOdeljenje(odeljenje);
 				ucenikRepo.save(ucenik);
 				logger.error("Greska u dodavanju ucenika u odeljenje.");
-				logger.info(
-						"Admin (email:" + AuthController.getEmail() + ") dodat ucenik u odeljenje " + odeljenje);
+				//logger.info(
+					//	"Admin (email:" + AuthController.getEmail() + ") dodat ucenik u odeljenje " + odeljenje);
 				return new ResponseEntity<Ucenik>(ucenik, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<RestError>(new RestError(10, "Ne postoji ucenik sa trazenim ID"),
@@ -108,8 +108,8 @@ public class OdeljenjeDaoImpl implements OdeljenjeDao {
 				odeljenje.setRazred(razred);
 				odeljenjeRepo.save(odeljenje);
 				logger.error("Greska prilikom dodavanja razreda odeljenju");
-				logger.info(
-						"Admin (email:" + AuthController.getEmail() + ") added razred odeljenju " + odeljenje);
+				//logger.info(
+						//"Admin (email:" + AuthController.getEmail() + ") added razred odeljenju " + odeljenje);
 				return new ResponseEntity<Odeljenje>(odeljenje, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<RestError>(new RestError(10, "NE postoji razred sa zadatim ID"),

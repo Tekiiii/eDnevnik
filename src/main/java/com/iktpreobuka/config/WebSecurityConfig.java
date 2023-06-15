@@ -35,9 +35,12 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.cors().and()
+        		.csrf().disable()
                 .addFilterAfter(new JWTAuthorizationFilter(secretKey), UsernamePasswordAuthenticationFilter.class)
-                .authorizeRequests().antMatchers(HttpMethod.POST, "/ednevnik/login").permitAll().anyRequest()
+                .authorizeRequests().antMatchers(HttpMethod.POST, "/ednevnik/login").permitAll()
+                .antMatchers("/ednevnik/").permitAll()
+                .anyRequest()
                 .authenticated();
         return http.build();
     }

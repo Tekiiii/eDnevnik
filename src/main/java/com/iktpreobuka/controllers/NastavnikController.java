@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,7 @@ import com.iktpreobuka.services.UserDao;
 
 @RestController
 @RequestMapping(path = "/ednevnik/nastavnik")
+@CrossOrigin(origins = "http://localhost:3000")
 public class NastavnikController {
 
 	@Autowired
@@ -65,13 +67,12 @@ public class NastavnikController {
 	public ResponseEntity<?> getById(@PathVariable String ids) {
 		try {
 			Integer id = Integer.valueOf(ids);
-			if (userDao.getLoggedInUser().getRole().equals(UserRole.NASTAVNIK)
-					&& !userDao.getLoggedInId().equals(id)) {
-				return new ResponseEntity<RestError>(new RestError(10, "Not authorized"), HttpStatus.BAD_REQUEST);
-			}
 			if (nastavnikRepo.existsById(id)) {
+			//if (userDao.getLoggedInUser().getRole().equals(UserRole.NASTAVNIK)
+				//	&& !userDao.getLoggedInId().equals(id)) {
+			//	return new ResponseEntity<RestError>(new RestError(10, "Not authorized"), HttpStatus.BAD_REQUEST);
+			//}
 				return new ResponseEntity<Nastavnik>(nastavnikRepo.findById(id).get(), HttpStatus.OK);
-
 			} else
 				return new ResponseEntity<RestError>(new RestError(10, "Ne postoji nastavnik sa trazenim ID"),
 						HttpStatus.NOT_FOUND);
@@ -85,7 +86,12 @@ public class NastavnikController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> addNastavnik(@Valid @RequestBody UserDTO newNastavnik, BindingResult result) {
 		Nastavnik nastavnik = new Nastavnik();
-		nastavnik.setRole(UserRole.NASTAVNIK);
+		nastavnik.setName(newNastavnik.getName());
+		nastavnik.setLastName(newNastavnik.getLastName());
+		nastavnik.setNoOfLicence(newNastavnik.getTeacherNoOfLicence());
+		nastavnik.setEmail(newNastavnik.getEmail());
+		nastavnik.setPozicijaNastavnika(newNastavnik.getPozicijaNastavnika());
+		//nastavnik.setRole(UserRole.NASTAVNIK);
 		if (result.hasErrors()) {
 			return new ResponseEntity<>(createErrorMessage(result), HttpStatus.BAD_REQUEST);
 		}
@@ -99,7 +105,7 @@ public class NastavnikController {
 	}
 
 	@Secured("admin")
-	@RequestMapping(method = RequestMethod.PUT, value = "/update/{ids}")
+	@RequestMapping(method = RequestMethod.PUT, value = "/{ids}")
 	public ResponseEntity<?> updateNastavnik(@PathVariable String ids, @Valid @RequestBody UserDTO updateNastavnik,
 			BindingResult result) {
 
@@ -124,7 +130,7 @@ public class NastavnikController {
 	}
 
 	@Secured("admin")
-	@RequestMapping(method = RequestMethod.DELETE, value = "/delete/{ids}")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{ids}")
 	public ResponseEntity<?> removeNastavnik(@PathVariable String ids) {
 		try {
 			Integer id = Integer.valueOf(ids);
@@ -133,7 +139,7 @@ public class NastavnikController {
 				if (nastavnik.getNrp().isEmpty()) {
 					nastavnikRepo.deleteById(id);
 					logger.error("Greska prilikom brisanja nastavnika #id" + nastavnik.getId());
-					logger.info("Admin (email: " + AuthController.getEmail() + ") deleted prdmet " + nastavnik);
+				logger.info("Admin (email: " + AuthController.getEmail() + ") deleted prdmet " + nastavnik);
 					return new ResponseEntity<Nastavnik>(nastavnik, HttpStatus.OK);
 				} else {
 					nastavnik.setRole(UserRole.NOT_ACTIVE);

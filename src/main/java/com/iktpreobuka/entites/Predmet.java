@@ -31,6 +31,12 @@ public class Predmet {
 
 	@Column
 	private String name;
+	
+	@Column
+	private String razred;
+	
+	@Column
+	private Integer fond;
 
 	@JsonBackReference
 	@OneToMany(mappedBy = "predmet", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
@@ -70,6 +76,25 @@ public class Predmet {
 
 	public void setRazredPredmet(List<Razred_Predmet> razredPredmet) {
 		this.razredPredmet = razredPredmet;
+	}
+	
+
+	public Integer getFond() {
+		return fond;
+	}
+
+	public void setFond(Integer fond) {
+		this.fond = fond;
+	}
+	
+	
+
+	public String getRazred() {
+		return razred;
+	}
+
+	public void setRazred(String razred) {
+		this.razred = razred;
 	}
 
 	@Override

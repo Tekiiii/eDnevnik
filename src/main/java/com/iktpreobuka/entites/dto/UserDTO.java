@@ -5,12 +5,31 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.iktpreobuka.entites.PozicijaNastavnika;
+import com.iktpreobuka.entites.UserRole;
 
 public class UserDTO {
 
 	private String user;
 	private String token;
+	private UserRole role;
 	
+	
+	
+	public UserDTO(String user, String token, UserRole role) {
+		super();
+		this.user = user;
+		this.token = token;
+		this.role = role;
+	}
+
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setRole(UserRole role) {
+		this.role = role;
+	}
+
 	public String getUser() {
 		return user;
 	}
