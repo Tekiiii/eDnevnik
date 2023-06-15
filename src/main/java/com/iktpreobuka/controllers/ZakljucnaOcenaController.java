@@ -59,7 +59,7 @@ public class ZakljucnaOcenaController {
 		return ucenikRepo.findById(id).get();
 	}
 
-	public ResponseEntity<?> izracunavanjeZakljucneOcene (Integer ucenikId, Integer predmetId) {
+	public ResponseEntity<?> izracunavanjeZakljucneOcene (Integer ucenikId, Long predmetId) {
 		if (ucenikRepo.existsById(ucenikId)) {
 			if (predmetRepo.existsById(predmetId)) {
 				Ucenik ucenik = ucenikRepo.findById(ucenikId).get();
@@ -88,7 +88,7 @@ public class ZakljucnaOcenaController {
 
 	}
 
-	public ResponseEntity<?> zakljucivanjeOcene(Integer ucenikId, Integer predmetId, Integer suggestion) {
+	public ResponseEntity<?> zakljucivanjeOcene(Integer ucenikId, Long predmetId, Integer suggestion) {
 		if (ucenikRepo.existsById(ucenikId)) {
 			if (predmetRepo.existsById(predmetId)) {
 				Ucenik ucenik = ucenikRepo.findById(ucenikId).get();
@@ -176,12 +176,12 @@ public class ZakljucnaOcenaController {
 
 	@Secured({ "admin", "predmetni_nastavnik" })
 	@RequestMapping(method = RequestMethod.POST, value = "zakljuciocenu/{ucenikIds}/{predmetIds}/sugg")
-	private ResponseEntity<?> zakljuciOcenu(@PathVariable String ucenikIds, @PathVariable String predmetIds,
+	private ResponseEntity<?> zakljuciOcenu(@PathVariable String ucenikIds, @PathVariable Long predmetIds,
 			@RequestParam String sugg) {
 
 		try {
 			Integer ucenikId = Integer.valueOf(ucenikIds);
-			Integer predmetId = Integer.valueOf(predmetIds);
+			Long predmetId = Long.valueOf(predmetIds);
 			Integer suggestion = Integer.parseInt(sugg);
 
 			if (ucenikRepo.existsById(ucenikId)) {

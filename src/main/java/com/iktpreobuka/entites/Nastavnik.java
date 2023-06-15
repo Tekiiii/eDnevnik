@@ -23,11 +23,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Nastavnik extends UserEntity {
 
 	@Column(name = "no_of_licence")
-	private String noOfLicence;
+	public String noOfLicence;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ime_pozicije")
-	private PozicijaNastavnika pn;
+	public PozicijaNastavnika pn;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "nastavnik", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)

@@ -158,13 +158,13 @@ public class OcenaController {
 	
 	@Secured({ "admin", "predmetni_nastavnik" })
 	@RequestMapping(method = RequestMethod.GET, value = "/izracunajzakljucnu/{ucenikId}/predmet/{predmetId}")
-	private ResponseEntity<?> izracunajZakljucnu(@PathVariable String ucenikId, @PathVariable String predmetId) {
+	private ResponseEntity<?> izracunajZakljucnu(@PathVariable String ucenikId, @PathVariable Long predmetId) {
 
 		try {
 
 			Iterable<Ucenik> ucenici = getSveUcenike();
 			Ucenik ucenik = getUcenik();
-			Predmet predmet = predmetRepo.findById(1).get();
+			Predmet predmet = predmetRepo.findById(predmetId).get();
 
 			if (!ocenaRepo.findByUcenikAndOnrp_Nrp_RazredPredmet_PredmetAndOznaka_Oznaka(ucenik, predmet, "zakljucna").isPresent()) {
 			List<Ocena> ocene = ocenaRepo.findByUcenikAndOnrp_Nrp_RazredPredmet_Predmet(ucenik, predmet);

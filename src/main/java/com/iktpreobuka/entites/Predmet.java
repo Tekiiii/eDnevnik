@@ -23,8 +23,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Predmet {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
 	@Version
 	private Integer version;
@@ -46,11 +46,11 @@ public class Predmet {
 		super();
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

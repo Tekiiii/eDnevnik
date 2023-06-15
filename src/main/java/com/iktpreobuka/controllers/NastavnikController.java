@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iktpreobuka.controllers.util.RestError;
 import com.iktpreobuka.entites.Nastavnik;
 import com.iktpreobuka.entites.UserRole;
+import com.iktpreobuka.entites.dto.NastavnikDTO;
 import com.iktpreobuka.entites.dto.UserDTO;
 import com.iktpreobuka.repositories.NastavnikRepository;
 import com.iktpreobuka.services.NastavnikDao;
@@ -84,28 +85,30 @@ public class NastavnikController {
 
 	@Secured("admin")
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> addNastavnik(@Valid @RequestBody UserDTO newNastavnik, BindingResult result) {
+	public NastavnikDTO addNastavnik(@Valid @RequestBody NastavnikDTO dto) {
+		
 		Nastavnik nastavnik = new Nastavnik();
-		nastavnik.setName(newNastavnik.getName());
-		nastavnik.setLastName(newNastavnik.getLastName());
-		nastavnik.setNoOfLicence(newNastavnik.getTeacherNoOfLicence());
-		nastavnik.setEmail(newNastavnik.getEmail());
-		nastavnik.setPozicijaNastavnika(newNastavnik.getPozicijaNastavnika());
-		//nastavnik.setRole(UserRole.NASTAVNIK);
-		if (result.hasErrors()) {
-			return new ResponseEntity<>(createErrorMessage(result), HttpStatus.BAD_REQUEST);
-		}
-		try {
-			return nastavnikDao.postDodajNastavnika(nastavnik, newNastavnik);
-		} catch (Exception e) {
-			return new ResponseEntity<RestError>(new RestError(1, "Error ocured: " + e.getMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
+		nastavnik.setName(dto.getName());
+		nastavnik.setLastName(dto.getLastName());
+		nastavnik.setNoOfLicence(dto.getNoOfLicence());
+		nastavnik.setEmail(dto.getEmail());
+		nastavnik.setPozicijaNastavnika(dto.getPn());
+		nastavnik.setRole(UserRole.NASTAVNIK);
+		//if (result.hasErrors()) {
+			//return new ResponseEntity<>(createErrorMessage(result), HttpStatus.BAD_REQUEST);
+		//}
+		//try {
+		//	return nastavnikDao.postDodajNastavnika(nastavnik, newNastavnik);
+		//} catch (Exception e) {
+		//	return new ResponseEntity<RestError>(new RestError(1, "Error ocured: " + e.getMessage()),
+			//		HttpStatus.INTERNAL_SERVER_ERROR);
+		//}
+		nastavnikRepo.save(nastavnik);
+		return new NastavnikDTO(nastavnik);
 	}
 
 	@Secured("admin")
-	@RequestMapping(method = RequestMethod.PUT, value = "/{ids}")
+	@RequestMapping(method = RequestMethod.PUT, value = "edit_nastavnik/{ids}")
 	public ResponseEntity<?> updateNastavnik(@PathVariable String ids, @Valid @RequestBody UserDTO updateNastavnik,
 			BindingResult result) {
 

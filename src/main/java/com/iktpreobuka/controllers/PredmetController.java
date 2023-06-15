@@ -56,9 +56,9 @@ public class PredmetController {
 	}
 	@Secured("admin")
 	@RequestMapping(method = RequestMethod.GET, value = "/by_id/{ids}")
-	public ResponseEntity<?> getById(@PathVariable String ids) {
+	public ResponseEntity<?> getById(@PathVariable Long ids) {
 		try {
-			Integer id = Integer.valueOf(ids);
+			Long id = Long.valueOf(ids);
 			if (predmetRepo.existsById(id)) {
 				return new ResponseEntity<Predmet>(predmetRepo.findById(id).get(), HttpStatus.OK);
 
@@ -86,14 +86,15 @@ public class PredmetController {
 	}
 
 	@Secured("admin")
-	@RequestMapping(method = RequestMethod.PUT, value = "/{ids}")
-	public ResponseEntity<?> updatePredmet(@PathVariable Integer id, @Valid @RequestBody PredmetDTO dto) {
+	@RequestMapping(method = RequestMethod.PUT, value = "edit_predmet/{ids}")
+	public ResponseEntity<?> editPredmet(@PathVariable Long id, @Valid @RequestBody PredmetDTO dto) {
 		Optional<Predmet> p = predmetRepo.findById(id);
 		if(p.isPresent()) {
 			Predmet p1 = p.get();
 			p1.setName(dto.getName());
 			p1.setFond(dto.getFond());
 			p1.setRazred(dto.getRazred());
+			p1.setVersion(dto.getVersion());
 			predmetRepo.save(p1);
 			return new ResponseEntity<PredmetDTO>(new PredmetDTO(p1), HttpStatus.OK);
 		}else{
@@ -131,14 +132,14 @@ public class PredmetController {
 
 	@Secured("admin")
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{ids}")
-	public ResponseEntity<?> removePredmet(@PathVariable String ids) {
+	public ResponseEntity<?> removePredmet(@PathVariable Long ids) {
 		try {
-			Integer id = Integer.valueOf(ids);
+			Long id = Long.valueOf(ids);
 			if (predmetRepo.existsById(id)) {
 				Predmet predmet = predmetRepo.findById(id).get();
 				if (predmet.getRazredPredmet().isEmpty()) {
 					predmetRepo.deleteById(id);
-					logger.error("Greska prilikom brisanja predmeta.");
+					
 					logger.info("Admin (email: " + AuthController.getEmail() + ") deleted predmet " + predmet);
 					return new ResponseEntity<Predmet>(predmet, HttpStatus.OK);
 				} else {

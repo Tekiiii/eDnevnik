@@ -28,19 +28,19 @@ public class UserEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	public Integer id;
 
 	@Version
 	private Integer version;
 
 	@Column
-	private String name;
+	public String name;
 
 	@Column(name = "last_name")
-	private String lastName;
+	public String lastName;
 
 	@Column(name = "email", nullable = false, unique = true)
-	private String email;
+	public String email;
 
 	@JsonIgnore
 	@Column(name = "password", nullable = false)
