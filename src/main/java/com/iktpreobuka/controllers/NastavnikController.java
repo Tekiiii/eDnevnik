@@ -108,7 +108,7 @@ public class NastavnikController {
 	}
 
 	@Secured("admin")
-	@RequestMapping(method = RequestMethod.PUT, value = "edit_nastavnik/{ids}")
+	@RequestMapping(method = RequestMethod.PUT, value = "/by_id/{ids}")
 	public ResponseEntity<?> updateNastavnik(@PathVariable String ids, @Valid @RequestBody UserDTO updateNastavnik,
 			BindingResult result) {
 

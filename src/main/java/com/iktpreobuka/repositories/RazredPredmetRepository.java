@@ -13,7 +13,7 @@ import com.iktpreobuka.entites.Razred_Predmet;
 
 public interface RazredPredmetRepository extends CrudRepository<Razred_Predmet, Integer> {
 
-	Optional<Razred_Predmet> findByRazred_idAndPredmet_id(Integer razredIs, Integer predmetId);
+	Optional<Razred_Predmet> findByRazred_idAndPredmet_id(Integer razredIs, Long pred);
 
 	Razred_Predmet findByRazred_label(Integer label);
 

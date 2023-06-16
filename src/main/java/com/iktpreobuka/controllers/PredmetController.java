@@ -86,8 +86,8 @@ public class PredmetController {
 	}
 
 	@Secured("admin")
-	@RequestMapping(method = RequestMethod.PUT, value = "edit_predmet/{ids}")
-	public ResponseEntity<?> editPredmet(@PathVariable Long id, @Valid @RequestBody PredmetDTO dto) {
+	@RequestMapping(method = RequestMethod.PUT, value = "edit_predmet/{id}")
+	public ResponseEntity<?> editPredmet(@PathVariable Long id,  @RequestBody PredmetDTO dto) {
 		Optional<Predmet> p = predmetRepo.findById(id);
 		if(p.isPresent()) {
 			Predmet p1 = p.get();
